@@ -1,0 +1,11 @@
+diff -up GameLift_12_22_2020/GameLift-SDK-Release-4.0.2/GameLift-Cpp-ServerSDK-3.4.1/gamelift-server-sdk/source/aws/gamelift/server/GameLiftServerState.cpp GameLift_12_22_2020/GameLift-SDK-Release-4.0.2/GameLift-Cpp-ServerSDK-3.4.1/gamelift-server-sdk/source/aws/gamelift/server/GameLiftServerState.cpp.incthread
+--- GameLift_12_22_2020/GameLift-SDK-Release-4.0.2/GameLift-Cpp-ServerSDK-3.4.1/gamelift-server-sdk/source/aws/gamelift/server/GameLiftServerState.cpp     2021-05-21 23:02:11.885029015 -0230
++++ GameLift_12_22_2020/GameLift-SDK-Release-4.0.2/GameLift-Cpp-ServerSDK-3.4.1/gamelift-server-sdk/source/aws/gamelift/server/GameLiftServerState.cpp.incthread   2021-05-21 23:02:00.874986181 -0230
+@@ -14,6 +14,7 @@
+ #include <aws/gamelift/server/protocols/sdk.pb.h>
+ #include <fstream>
+ #include <iostream>
++#include <thread>
+ 
+ using namespace Aws::GameLift;
+
