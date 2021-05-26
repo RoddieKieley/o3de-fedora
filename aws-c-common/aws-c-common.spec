@@ -22,7 +22,7 @@ Development files for aws-c-common.
 %setup -q
 
 %build
-%cmake -DBUILD_SHARED_LIBS=ON
+%cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_CXX_FLAGS_RELEASE:STRING=-Wno-maybe-uninitialized -DCMAKE_SYSTEM_NAME:STRING=Linux -DCMAKE_SIZEOF_VOID_P=8 -DCMAKE_BUILD_TYPE=RelWithDebInfo
 %cmake_build
 
 %install
@@ -37,25 +37,30 @@ Development files for aws-c-common.
 %files
 %license LICENSE NOTICE
 %doc README.md
-%{_libdir}/libaws-c-common.so.1*
+%{_usr}/lib/libaws-c-common.so.1*
 
 %files devel
 %{_includedir}/aws/common/
 %dir %{_includedir}/aws/testing
 %{_includedir}/aws/testing/aws_test_allocators.h
 %{_includedir}/aws/testing/aws_test_harness.h
-%{_libdir}/aws-c-common/
-%{_libdir}/cmake/AwsCFlags.cmake
-%{_libdir}/cmake/AwsCheckHeaders.cmake
-%{_libdir}/cmake/AwsFeatureTests.cmake
-%{_libdir}/cmake/AwsFindPackage.cmake
-%{_libdir}/cmake/AwsLibFuzzer.cmake
-%{_libdir}/cmake/AwsSIMD.cmake
-%{_libdir}/cmake/AwsSanitizers.cmake
-%{_libdir}/cmake/AwsSharedLibSetup.cmake
-%{_libdir}/cmake/AwsTestHarness.cmake
-%{_libdir}/libaws-c-common.so
+%{_usr}/lib/aws-c-common/
+%{_usr}/lib/cmake/AwsCFlags.cmake
+%{_usr}/lib/cmake/AwsCheckHeaders.cmake
+%{_usr}/lib/cmake/AwsFeatureTests.cmake
+%{_usr}/lib/cmake/AwsFindPackage.cmake
+%{_usr}/lib/cmake/AwsLibFuzzer.cmake
+%{_usr}/lib/cmake/AwsSIMD.cmake
+%{_usr}/lib/cmake/AwsSanitizers.cmake
+%{_usr}/lib/cmake/AwsSharedLibSetup.cmake
+%{_usr}/lib/cmake/AwsTestHarness.cmake
+%{_usr}/lib/libaws-c-common.so
 
 %changelog
+* Wed May 26 2021 Roddie Kieley <rkieley@apache.org> - 0.5.2-2
+- disabled maybe-uninitialized compiler error
+- more specific flags for cmake for f34
+- utilize lib location when looking for the lib symbolic link
+
 * Wed Mar 17 2021 Tom Callaway <spot@fedoraproject.org> - 0.5.2-1
 - initial package
