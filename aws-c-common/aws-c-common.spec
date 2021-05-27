@@ -1,6 +1,6 @@
 Name:		aws-c-common
 Version:	0.5.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Core c99 package for AWS SDK for C
 URL:		https://github.com/awslabs/aws-c-common
 Source0:	https://github.com/awslabs/aws-c-common/archive/v%{version}.tar.gz
