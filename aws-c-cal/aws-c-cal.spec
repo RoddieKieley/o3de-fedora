@@ -1,6 +1,6 @@
 Name:		aws-c-cal
 Version:	0.5.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Aws Crypto Abstraction Layer
 URL:		https://github.com/awslabs/aws-c-common
 Source0:	https://github.com/awslabs/aws-c-common/archive/v%{version}.tar.gz
@@ -26,7 +26,7 @@ Development files for aws-c-cal.
 %patch0 -p1 -b .fixup
 
 %build
-%cmake -DBUILD_SHARED_LIBS=ON
+%cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_C_FLAGS:STRING=-w -DCMAKE_CXX_FLAGS:STRING=-w -DCMAKE_SYSTEM_NAME:STRING=Linux -DCMAKE_SIZEOF_VOID_P=8 -DCMAKE_BUILD_TYPE=RelWithDebInfo
 %cmake_build
 
 %install
@@ -42,14 +42,18 @@ Development files for aws-c-cal.
 %files
 %license LICENSE NOTICE
 %doc README.md
-%{_bindir}/sha256_profile
-%{_libdir}/libaws-c-cal.so.1*
+# sha256_profile
+%{_usr}/lib/libaws-c-cal.so.1*
 
 %files devel
 %{_includedir}/aws/cal/
-%{_libdir}/aws-c-cal/
-%{_libdir}/libaws-c-cal.so
+%{_usr}/lib/aws-c-cal/
+%{_usr}/lib/libaws-c-cal.so
 
 %changelog
+* Thu May 27 2021 Roddie Kieley <rkieley@apache.org> - 0.5.1-2
+- ensure lib dir usage that works for stock f34 GA
+- add cmake defines for linux platform 64 bit release with debug info
+
 * Wed Mar 17 2021 Tom Callaway <spot@fedoraproject.org> - 0.5.1-1
 - initial package
