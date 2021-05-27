@@ -58,9 +58,7 @@ Development files for aws-c-common.
 
 %changelog
 * Wed May 26 2021 Roddie Kieley <rkieley@apache.org> - 0.5.2-2
-- disabled maybe-uninitialized compiler error
-- more specific flags for cmake for f34
-- utilize lib location when looking for the lib symbolic link
+- updated to access libs via manual lib specification for now
 
 * Wed Mar 17 2021 Tom Callaway <spot@fedoraproject.org> - 0.5.2-1
 - initial package

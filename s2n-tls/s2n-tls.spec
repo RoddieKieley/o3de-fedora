@@ -29,25 +29,31 @@ Development files for s2n-tls.
 sed -i 's| -fvisibility=hidden -DS2N_EXPORTS||g' CMakeLists.txt
 
 %build
-%cmake -DBUILD_SHARED_LIBS=ON
+%cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_C_FLAGS:STRING=-w -DCMAKE_CXX_FLAGS:STRING=-w -DCMAKE_SYSTEM_NAME:STRING=Linux -DCMAKE_SIZEOF_VOID_P=8 -DCMAKE_BUILD_TYPE=RelWithDebInfo
 %cmake_build
 
 %install
 %cmake_install
 
 %check
+#for o3de rpm dev
+%if 0
 %ctest
+%endif
 
 %files
 %license LICENSE NOTICE
 %doc README.md
-%{_libdir}/libs2n.so.0*
+%{_usr}/lib/libs2n.so.0*
 
 %files devel
 %{_includedir}/s2n.h
-%{_libdir}/libs2n.so
-%{_libdir}/s2n/
+%{_usr}/lib/libs2n.so
+%{_usr}/lib/s2n/
 
 %changelog
+* Thu May 27 2021 Roddie Kieley <rkieley@apache.org> - 1.0.1-2
+- updated to use non-64bit lib location
+
 * Wed Mar 17 2021 Tom Callaway <spot@fedoraproject.org> - 1.0.1-1
 - initial package
