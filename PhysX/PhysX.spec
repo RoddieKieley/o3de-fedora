@@ -7,7 +7,7 @@
 Name:		PhysX
 # I think they just are adding numbers here for fun
 Version:	4.1.1.27006925
-Release:	1.git%{shortcommit}%{?dist}
+Release:	2.git%{shortcommit}%{?dist}
 Summary:	Scalable multi-platform physics system
 # Cg Toolkit is Proprietary
 License:	BSD and Proprietary
@@ -78,7 +78,7 @@ The samples and snippet binaries from PhysX.
 %patch5 -p1 -b .system-OpenGL
 %patch6 -p1 -b .soversion
 
-sed -i 's|PHYSX_CXX_FLAGS_RELEASE "-O3"|PHYSX_CXX_FLAGS_RELEASE "%{optflags} -Wno-error=nonnull -Wno-error=maybe-uninitialized -Wno-error=restrict -Wno-error=class-memaccess -Wno-error=array-bounds -Wno-error=odr -Wno-error=stringop-overflow -Wno-error=misleading-indentation -Wno-error=unused-function"|g' physx/source/compiler/cmake/linux/CMakeLists.txt
+sed -i 's|PHYSX_CXX_FLAGS_RELEASE "-O3"|PHYSX_CXX_FLAGS_RELEASE "%{optflags} -Wno-error=nonnull -Wno-error=maybe-uninitialized -Wno-error=restrict -Wno-error=class-memaccess -Wno-error=array-bounds -Wno-error=odr -Wno-error=stringop-overflow -Wno-error=misleading-indentation -Wno-error=unused-function -Wno-stringop-overread"|g' physx/source/compiler/cmake/linux/CMakeLists.txt
 
 rm -rf externals/glew* externals/opengl-linux externals/vswhere
 
@@ -91,7 +91,7 @@ pushd physx
 popd
 
 pushd physx/compiler/linux-release/
-make VERBOSE=1
+make VERBOSE=1 -j32
 popd
 
 %install
@@ -168,6 +168,9 @@ done
 %{_bindir}/PhysX-*
 
 %changelog
+* Mon May 31 2021 Roddie Kieley <rkieley@apache.org> - 4.1.1.27006925
+- added -Werror=no-stringop-overread and -j32 for local quicker build
+
 * Fri Mar 19 2021 Tom Callaway <spot@fedoraproject.org> - 4.1.1.27006925
 - initial package
 
