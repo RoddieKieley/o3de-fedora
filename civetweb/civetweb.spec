@@ -1,6 +1,6 @@
 Name:		civetweb
 Version:	1.13
-Release:	1%{?dist}
+Release:	2%{?dist}
 URL:		https://github.com/civetweb/civetweb
 Source0:	https://github.com/civetweb/civetweb/archive/refs/tags/v%{version}.tar.gz
 Patch0:		civetweb-1.13-Makefile-fix-lua.patch
@@ -33,15 +33,17 @@ Summary:	Development files for civetweb
 Development files for civetweb.
 
 %prep
+%define _build_id_links none
 %setup -q
 %patch0 -p1 -b .fix-lua
 %patch1 -p1 -b .old
 %patch2 -p1 -b .fix-duk
 
 sed -i 's|-Wall|-Wall %{optflags}|g' Makefile
+sed -i 's|-flto=auto\ -ffat-lto-objects|-flto|g' Makefile
 
 %build
-make build slib WITH_ALL=1 WITH_CPP=1 WITH_DUKTAPE_SHARED=1 WITH_LUA_SHARED=1 WITH_LUA_VERSION=504 WITH_DUKTAPE_VERSION=202
+make build slib WITH_ALL=1 WITH_CPP=1 WITH_DUKTAPE_SHARED=1 WITH_LUA_SHARED=1 WITH_LUA_VERSION=504 WITH_DUKTAPE_VERSION=202 -j32
 
 %install
 mkdir -p %{buildroot}%{_libdir}
@@ -67,5 +69,8 @@ rm -rf %{buildroot}%{_datadir}/doc/%{name}/*.md
 %{_includedir}/civetweb.h
 
 %changelog
+* Mon May 31 2021 Roddie Kieley <rkieley@apache.org> - 1.13-2
+- changes to build on f34 GA
+
 * Wed Mar 24 2021 Tom Callaway <spot@fedoraproject.org> - 1.13-1
 - initial package
