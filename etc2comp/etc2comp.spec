@@ -4,7 +4,7 @@
 Name:		etc2comp
 # Date of last commit, there is no version
 Version:	20170424
-Release:	2.git%{shortcommit}%{?dist}
+Release:	3.git%{shortcommit}%{?dist}
 Summary:	Texture to ETC2 compressor
 # third_party/lodepng is Zlib
 License:	ASL 2.0 and zlib
@@ -43,14 +43,16 @@ Development files for etc2comp.
 %patch3 -p1 -b .fix-leak
 
 # This is stupid and lazy
-sed -i 's|-I/usr/include/i386-linux-gnu/c++/4.8 -I/usr/include/c++/4.8 -std=c++11 -pthread -g3 -Wall -O2|-std=c++11 %{optflags}|g' CMakeLists.txt
+%global _lto_cflags %nil
+sed -i 's|-I/usr/include/i386-linux-gnu/c++/4.8 -I/usr/include/c++/4.8 -std=c++11 -pthread -g2 -Wall -O2|-std=c++11 %{optflags}|g' CMakeLists.txt
+echo %{optflags}
 
 # fix encoding
 sed -i 's/\r$//' AUTHORS
 sed -i 's/\r$//' README.md
 
 %build
-%cmake
+%cmake -DCMAKE_C_FLAGS=-flto
 %cmake_build
 
 %install
@@ -103,6 +105,9 @@ chrpath --delete %{buildroot}%{_bindir}/EtcTool
 %{_libdir}/libEtcLib.so
 
 %changelog
+* Mon May 31 2021 Roddie Kieley <rkieley@apache.org> - 20170424-2.git9cd0f9c
+- updated for f34 GA build with clang lto options.
+
 * Mon Apr 26 2021 Tom Callaway <spot@fedoraproject.org> - 20170424-2.git9cd0f9c
 - package up all headers (except lodepng.h)
 
