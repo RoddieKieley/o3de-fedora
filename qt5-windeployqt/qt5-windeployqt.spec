@@ -3,7 +3,7 @@
 Summary: Qt5 - WindeployQt tool
 Name:    qt5-windeployqt
 Version: 5.15.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv3
 Url:     http://www.qt.io
 %global majmin %(echo %{version} | cut -d. -f1-2)
@@ -53,7 +53,7 @@ Requires: qt5-qttools-common = %{version}
   %{?no_examples}
 
 pushd src
-%{qmake_qt5} -o Makefile /home/spot/rpmbuild/BUILD/qttools-everywhere-src-5.15.2/src/src.pro
+%{qmake_qt5} -o Makefile %{_builddir}/qttools-everywhere-src-5.15.2/src/src.pro
 make sub-windeployqt
 popd
 
@@ -74,6 +74,9 @@ popd
 %{_qt5_bindir}/windeployqt
 
 %changelog
+* Mon Jun 01 2021 Roddie Kieley <rkieley@apache.org> - 5.15.2-3
+- do not try to find non-existent icudtl.dat
+
 * Tue Apr 13 2021 Tom Callaway <spot@fedoraproject.org> - 5.15.2-2
 - do not try to find non-existent icudtl.dat
 
